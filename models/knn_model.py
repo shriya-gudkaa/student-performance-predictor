@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, classification_report
 
 # Load dataset
 df = pd.read_csv("data/marksheet.csv")
@@ -43,6 +43,8 @@ y_pred = model.predict(X_test)
 
 # Accuracy
 print("Accuracy:", accuracy_score(y_test, y_pred))
+print("\nDetailed Report:")
+print(classification_report(y_test, y_pred))
 
 # Test with new student
 new_student = pd.DataFrame(
