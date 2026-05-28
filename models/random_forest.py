@@ -12,7 +12,6 @@ df = pd.read_csv("data/marksheet.csv")
 # Select subject columns
 subjects = df.columns[5:]
 
-# Create target (Pass/Fail) — same logic as KNN
 df["Result"] = np.where(
     (df[subjects] < 35).any(axis=1),
     "Fail",
@@ -28,10 +27,6 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.3, random_state=42
 )
 
-# NOTE: Random Forest also does NOT need StandardScaler
-# It builds many decision trees and combines their results
-# Scale of features doesn't affect tree splits
-
 # Random Forest model (100 trees)
 model = RandomForestClassifier(n_estimators=100, random_state=42)
 model.fit(X_train, y_train)
@@ -44,13 +39,11 @@ print("Accuracy:", accuracy_score(y_test, y_pred))
 print("\nDetailed Report:")
 print(classification_report(y_test, y_pred))
 
-# Feature importance — this is what Random Forest gives you extra
-# It tells you which subject has the most impact on pass/fail
 print("\nFeature Importance (which subject matters most):")
 for subject, score in zip(subjects, model.feature_importances_):
     print(f"  {subject}: {score:.4f}")
 
-# Test with same new student as KNN
+
 new_student = pd.DataFrame(
     [[85, 70, 90, 95]],
     columns=subjects
