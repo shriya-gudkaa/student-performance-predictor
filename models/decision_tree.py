@@ -28,10 +28,6 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.3, random_state=42
 )
 
-# NOTE: Decision Tree does NOT need StandardScaler
-# KNN needed scaling because it measures distance between points
-# Decision Tree makes yes/no splits, so scale doesn't matter
-
 # Decision Tree model
 model = DecisionTreeClassifier(random_state=42)
 model.fit(X_train, y_train)
@@ -44,7 +40,7 @@ print("Accuracy:", accuracy_score(y_test, y_pred))
 print("\nDetailed Report:")
 print(classification_report(y_test, y_pred))
 
-# Test with same new student as KNN
+
 new_student = pd.DataFrame(
     [[85, 70, 90, 5]],
     columns=subjects
